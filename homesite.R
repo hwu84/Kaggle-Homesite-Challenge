@@ -1,5 +1,6 @@
-# homesite21
+
 # find feature importance of bst19_1. Select certain proportaion of feature(top 200) and train new xgb
+# Author: Haozhen Wu
 
 bst19_1 = xgb.load("bst19_1")
 load("homesite19_submit.RData")
@@ -10,7 +11,7 @@ xgb.plot.importance(importance_matrix =feature_importance )
 #dev.off()
 importantFeatures = feature_importance[[1]][1:150]
 
-# use code from Su da ge. convert factor into numeric id.
+# convert factor into numeric id.
 # added more features related to date. row sum of 0,-1,0 and -1.
 # add interaction feature. dayofweek + 10*SalesField7
 
@@ -18,13 +19,9 @@ setwd("~/Desktop/study/kaggle/Homesite")
 library(xgboost)
 library(readr)
 library(chron)
-#my favorite seed^^
 set.seed(1120)
 
 cat("reading the train and test data\n")
-#train <- read_csv("../input/train.csv")
-#test  <- read_csv("../input/test.csv")
-
 train <- read_csv("~/Desktop/study/kaggle/Homesite/train.csv")
 test <- read_csv("~/Desktop/study/kaggle/Homesite/test.csv")
 
@@ -126,7 +123,6 @@ for (f in feature.names) {
 importantFeatures = feature_importance[[1]][1:200]
 
 homesite22_train<-train[,importantFeatures]
-#homesite15_test = data.matrix(test[,feature.names])
 homesite22_test = test[,importantFeatures]
 test_id = test$QuoteNumber
 
